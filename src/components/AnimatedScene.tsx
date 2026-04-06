@@ -251,7 +251,7 @@ export function AnimatedScene({
         <Peonies position={[-0.9, 0.7, 4.6]} rotation={[0, 5, 0]} scale={5.3} />
         <Peter position={peterPos} rotation={peterRot} scale={peterScale} />
         <Cloudy position={cloudyPos} rotation={cloudyRot} scale={cloudyScale} />
-        <Coco position={cocoPos} rotation={cocoRot} scale={cocoScale} />
+        <Coco position={[-0.35000000000000375,1.53,3.189999999999993]} rotation={[0,2.519999999999996,0]} scale={0.2} />
         <group onPointerDown={(e) => { e.stopPropagation(); onTysonPress?.(); }}>
            <Tyson position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
         </group>
