@@ -1,11 +1,9 @@
 import { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
-const Eric = (props: any) => {
+const Cloudy = (props: any) => {
   const ref = useRef<any>(null);
-  const { scene } = useGLTF("/birthday-eric.glb");
-
-
+  const { scene } = useGLTF("/cloudy.compressed.glb");
 
   return (
     <group ref={ref} {...props}>
@@ -14,6 +12,6 @@ const Eric = (props: any) => {
   );
 };
 
-export default Eric;
+export default Cloudy;
 
-useGLTF.preload("/birthday-eric.glb");
+useGLTF.preload("/cloudy.compressed.glb");

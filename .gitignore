@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # This covers .jpg, .JPG, .jpeg, etc.
-public/
+# public/

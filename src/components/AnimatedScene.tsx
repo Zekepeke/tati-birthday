@@ -1,8 +1,8 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { Environment, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import type { Group } from "three";
-import { Vector3 } from "three";
+import { Color, Vector3 } from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 // Constants & Utils
@@ -12,19 +12,14 @@ import * as C from "../constants"; // Import all constants as namespace C for cl
 // Models
 import { Candle } from "../models/candle";
 import HeartCake from "../models/HeartCake";
-import Chudette from "../models/Chuddette";
 import { PictureFrame } from "../models/pictureFrame";
 import { Fireworks } from "./Fireworks";
 import { BirthdayCard } from "./BirthdayCard";
 import RomanticTable from "../models/RomanticTable";
-import Butters from "../models/Butter";
-import Zuki from "../models/Zuki";
-import Eric from "../models/Eric";
-import HelloKitty from "../models/HelloKitty";
-import Kuromi from "../models/Kuromi";
-import Chud from "../models/Chud";
 import Peonies from "../models/Peonies";
 import Tyson from "../models/Tyson";
+
+import { Leva, useControls } from 'leva'
 
 type AnimatedSceneProps = {
   isPlaying: boolean;
@@ -36,10 +31,7 @@ type AnimatedSceneProps = {
   activeCardId: string | null;
   onToggleCard: (id: string) => void;
   onCandlePress?: () => void;
-  onButtersPress?: () => void;
   onTysonPress?: () => void;
-  onZukiPress?: () => void;
-  onEricPress?: () => void;
   fireworksActive: boolean;
 };
 
@@ -78,16 +70,6 @@ function ConfiguredOrbitControls() {
   );
 }
 
-function EnvironmentBackgroundController({ intensity }: { intensity: number }) {
-  const scene = useThree((state) => state.scene);
-  useEffect(() => {
-    if ("backgroundIntensity" in scene) {
-      (scene as any).backgroundIntensity = intensity;
-    }
-  }, [scene, intensity]);
-  return null;
-}
-
 // --- Main Component ---
 export function AnimatedScene({
   isPlaying,
@@ -99,11 +81,8 @@ export function AnimatedScene({
   activeCardId,
   onToggleCard,
   onCandlePress,
-  onButtersPress,
   fireworksActive,
   onTysonPress,
-  onZukiPress,
-  onEricPress
 }: AnimatedSceneProps) {
   const cakeGroup = useRef<Group>(null);
   const tableGroup = useRef<Group>(null);
@@ -114,11 +93,16 @@ export function AnimatedScene({
   const completionNotifiedRef = useRef(false);
   const backgroundOpacityRef = useRef(1);
   const environmentProgressRef = useRef(0);
+  const scene = useThree((state) => state.scene);
 
   useEffect(() => {
+    scene.background = new Color("#050505");
     onBackgroundFadeChange?.(backgroundOpacityRef.current);
     onEnvironmentProgressChange?.(environmentProgressRef.current);
-  }, [onBackgroundFadeChange, onEnvironmentProgressChange]);
+    return () => {
+      scene.background = null;
+    };
+  }, [scene, onBackgroundFadeChange, onEnvironmentProgressChange]);
 
   const emitBackgroundOpacity = (value: number) => {
     const clamped = clamp(value, 0, 1);
@@ -222,26 +206,15 @@ export function AnimatedScene({
     <>
       <ambientLight intensity={(1 - environmentProgressRef.current) * 0.8} />
       <directionalLight intensity={1.4} position={[20, 10, 2]} color={[1, 0.9, 0.95]} />
-      <Environment
-        files={["/black.jpg"]}
-        backgroundRotation={[0, 3.3, 0]}
-        environmentRotation={[0, 3.3, 0]}
-        background
-        environmentIntensity={0.1 * environmentProgressRef.current}
-        backgroundIntensity={0.7 * environmentProgressRef.current}
-      />
-      <EnvironmentBackgroundController intensity={1 * environmentProgressRef.current} />
       <Fireworks isActive={fireworksActive} origin={[0, 10, 0]} />
       <ConfiguredOrbitControls />
 
       <group ref={tableGroup}>
         <RomanticTable position={[-3.4, -14.8, 0.2]} scale={6.5} />
-        <Chudette position={[1.6, -1.4, 1.8]} rotation={[0, -3.4, 0]} scale={10} />
-        <Chud position={[-0.8, -0.0099, -2.3]} rotation={[0, 1.28, 0]} scale={1.9} />
-        <PictureFrame image="/frame2.jpg" position={[0, 0.735, 3]} rotation={[0, 5.6, 0]} scale={0.75} />
-        <PictureFrame image="/frame3.jpg" position={[0, 0.735, -3]} rotation={[0, 4.0, 0]} scale={0.75} />
-        <PictureFrame image="/frame4.jpg" position={[-1.5, 0.735, 2.5]} rotation={[0, 5.4, 0]} scale={0.75} />
-        <PictureFrame image="/frame1.jpg" position={[-1.5, 0.735, -2.5]} rotation={[0, 4.2, 0]} scale={0.75} />
+        <PictureFrame image="/mine.png" position={[0, 0.735, 3]} rotation={[0, 5.6, 0]} scale={0.75} />
+        <PictureFrame image="/mine.png" position={[0, 0.735, -3]} rotation={[0, 4.0, 0]} scale={0.75} />
+        <PictureFrame image="/mine.png" position={[-1.5, 0.735, 2.5]} rotation={[0, 5.4, 0]} scale={0.75} />
+        <PictureFrame image="/mine.png" position={[-1.5, 0.735, -2.5]} rotation={[0, 4.2, 0]} scale={0.75} />
         {cards.map((card) => (
           <BirthdayCard
             key={card.id}
@@ -253,29 +226,19 @@ export function AnimatedScene({
             onToggle={onToggleCard}
           />
         ))}
-        <group onPointerDown={(e) => { e.stopPropagation(); onEricPress?.(); }}>
-          <Eric position={[-4.2, 1.9, -2.9]} rotation={[0, -5.2, 0]} scale={2} />
-        </group>
-        <HelloKitty position={[-3.2, 2.4, 4.8]} rotation={[0, 2.41, 0]} scale={2.4} />
-        <Kuromi position={[-6.5, 2.4, 2.4]} rotation={[0, 2, 0]} scale={2.6} />
-        <group onPointerDown={(e) => { e.stopPropagation(); onZukiPress?.(); }}>
-          <Zuki position={[-2.8, 1.4, 2.5]} rotation={[0, -4.2, 0]} scale={1.9} />
-        </group>
+        {/* <HelloKitty position={[-3.2, 2.4, 4.8]} rotation={[0, 2.41, 0]} scale={2.4} /> */}
         <Peonies position={[-0.9, 0.7, 4.6]} rotation={[0, 5, 0]} scale={5.3} />
         <group onPointerDown={(e) => { e.stopPropagation(); onTysonPress?.(); }}>
            <Tyson position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
         </group>
-        <group onPointerDown={(e) => { e.stopPropagation(); onButtersPress?.(); }}>
-          <Butters position={[-1.8, 2, -4.5]} rotation={[0, -5.5, 0]} scale={2} />
-        </group>
       </group>
 
       <group ref={cakeGroup}>
-        <HeartCake position={[-0.3, 0.6, 0]} rotation={[0, 0.7, 0]} scale={1.4} />
+        <HeartCake position={[-0.3, 0.1, 0]} rotation={[0, 1.6, 0]} scale={1.4} />
       </group>
 
       <group ref={candleGroup} onPointerDown={(e) => { e.stopPropagation(); onCandlePress?.(); }}>
-        <Candle isLit={candleLit} scale={0.25} position={[-0.3, 1.37, 0]} />
+        <Candle isLit={candleLit} scale={0.25} position={[-0.5, 0.97, 0.04]} />
       </group>
     </>
   );

@@ -17,10 +17,7 @@ export default function App() {
 
   // Custom Hook for Music
   const { musicOn, toggleMusic, playMusic } = useAudio("/Piel_Canela.mp3");
-  const playTyson = useSound("/tyson.mp3"); 
-  const playButters = useSound("/butters_voice.mp3");
-  const playZuki = useSound("/zuki_sound.mp3");
-  const playEric = useSound("/eric.mp3");
+  const playTyson = useSound("/tyson.mp3", 0.8);
 
   const startExperience = useCallback(() => {
     if (hasStarted) return;
@@ -89,10 +86,7 @@ export default function App() {
             activeCardId={activeCardId}
             onToggleCard={(id) => setActiveCardId((prev) => (prev === id ? null : id))}
             onCandlePress={blowOutCandle}
-            onButtersPress={playButters}
             onTysonPress={playTyson}
-            onZukiPress={playZuki}
-            onEricPress={playEric}
           />
         </Suspense>
       </Canvas>
@@ -109,7 +103,7 @@ export default function App() {
           onClick={toggleMusic}
           style={{
             width: 46, height: 28, borderRadius: 999, cursor: "pointer", border: "1px solid rgba(255,255,255,0.35)",
-            background: musicOn ? "rgba(255, 105, 180, 0.85)" : "rgba(255,255,255,0.18)", position: "relative"
+            background: musicOn ? "rgba(237, 200, 255, 0.97)" : "rgba(48, 25, 52, 0.7)", position: "relative"
           }}
         >
           <span style={{

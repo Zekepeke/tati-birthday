@@ -70,7 +70,7 @@ export function TypingOverlay({ hasStarted, onTypingComplete, backgroundOpacity 
         {typedLines.map((line, index) => {
           const showCursor = cursorVisible && index === currentLineIndex && !isTypingDone;
           return (
-            <span className="typed-line" style={{ color: "#ff69b4" }} key={index}>
+            <span className="typed-line" style={{ color: "#CCCCFF" }} key={index}>
               {line || "\u00a0"}
               {showCursor && <span className="typed-cursor">_</span>}
             </span>

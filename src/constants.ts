@@ -41,7 +41,7 @@ export const ORBIT_MAX_POLAR = Math.PI / 2;
 
 // --- Text Content ---
 export const TYPED_LINES = [
-  "> Amanda",
+  "> Tatiana",
   "...",
   "> today is your birthday!!!",
   "...",
@@ -64,43 +64,43 @@ export type BirthdayCardConfig = {
 export const BIRTHDAY_CARDS: ReadonlyArray<BirthdayCardConfig> = [
   {
     id: "confetti",
-    image: "/mine.jpeg",
+    image: "/mine.png",
     position: [1, 0.081, -1.2],
     rotation: [-Math.PI / 2 , 0, 6],
   },
   {
     id: "angie",
-    image: "/angie_card.jpeg",
+    image: "/mine.png",
     position: [2, 0.081, 0],
     rotation: [-Math.PI / 2 , 0, 1.6],
   },
   {
     id: "brother_sister",
-    image: "/brother_sister.jpeg",
+    image: "/mine.png",
     position: [-0.7, 0.081, 1.9],
     rotation: [-Math.PI / 2 , 0, 8],
   },
   {
     id: "izzy",
-    image: "/izzy.jpeg",
+    image: "/mine.png",
     position: [0.4, 0.081, 1.8],
     rotation: [-Math.PI / 2 , 0, 1],
   },
   {
     id: "niece",
-    image: "/niece.jpeg",
+    image: "/mine.png",
     position: [2, 0.092, -1.4],
     rotation: [-Math.PI / 2 , 0, 2],
   },
   {
     id: "marriah",
-    image: "/marriah.JPG",
+    image: "/mine.png",
     position: [0.9, 0.095, -2.19],
     rotation: [-Math.PI / 2 , 0, 2.5],
   },
   {
     id: "smile",
-    image: "/mine2.jpg",
+    image: "/mine.png",
     position: [-6, 0.23, -1.1],
     rotation: [-Math.PI / 2 , 0, 6],
   },
