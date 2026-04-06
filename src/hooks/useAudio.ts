@@ -1,13 +1,14 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 
 // --- Existing Background Music Hook (unchanged) ---
-export function useAudio(url: string) {
+export function useAudio(url: string, volume = 1) {
   const [musicOn, setMusicOn] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const audio = new Audio(url);
     audio.loop = true;
+    audio.volume = volume;
     audio.preload = "auto";
     audioRef.current = audio;
     return () => {
