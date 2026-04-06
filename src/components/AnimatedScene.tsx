@@ -1,5 +1,5 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { Cloud, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import type { Group } from "three";
 import { Color, Vector3 } from "three";
@@ -19,7 +19,6 @@ import RomanticTable from "../models/RomanticTable";
 import Peonies from "../models/Peonies";
 import Tyson from "../models/Tyson";
 
-import { Leva, useControls } from 'leva'
 import Peter from "../models/Peter";
 import Coco from "../models/Coco";
 import Cloudy from "../models/Cloudy";
@@ -99,23 +98,6 @@ export function AnimatedScene({
   const environmentProgressRef = useRef(0);
   const scene = useThree((state) => state.scene);
 
-  const { cloudyPos, cloudyRot, cloudyScale } = useControls('Cloudy', {
-    cloudyPos: { value: [-9.5, 0.6, -1.2], min: -20, max: 20, step: 0.01 },
-    cloudyRot: { value: [0, 2.3, 0], min: -Math.PI, max: Math.PI, step: 0.01 },
-    cloudyScale: { value: 8.1, min: 0, max: 20, step: 0.01 },
-  });
-
-  const { peterPos, peterRot, peterScale } = useControls('Peter', {
-    peterPos: { value: [-9.5, 0.6, -1.2], min: -20, max: 20, step: 0.01 },
-    peterRot: { value: [0, 2.3, 0], min: -Math.PI, max: Math.PI, step: 0.01 },
-    peterScale: { value: 8.1, min: 0, max: 20, step: 0.01 },
-  });
-
-  const { cocoPos, cocoRot, cocoScale } = useControls('Coco', {
-    cocoPos: { value: [-9.5, 0.6, -1.2], min: -20, max: 20, step: 0.01 },
-    cocoRot: { value: [0, 2.3, 0], min: -Math.PI, max: Math.PI, step: 0.01 },
-    cocoScale: { value: 8.1, min: 0, max: 20, step: 0.01 },
-  });
 
   useEffect(() => {
     scene.background = new Color("#050505");
