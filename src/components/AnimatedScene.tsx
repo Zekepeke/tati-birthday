@@ -1,5 +1,5 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Cloud, OrbitControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
 import type { Group } from "three";
 import { Color, Vector3 } from "three";
@@ -20,6 +20,9 @@ import Peonies from "../models/Peonies";
 import Tyson from "../models/Tyson";
 
 import { Leva, useControls } from 'leva'
+import Peter from "../models/Peter";
+import Coco from "../models/Coco";
+import Cloudy from "../models/Cloudy";
 
 type AnimatedSceneProps = {
   isPlaying: boolean;
@@ -228,6 +231,9 @@ export function AnimatedScene({
         ))}
         {/* <HelloKitty position={[-3.2, 2.4, 4.8]} rotation={[0, 2.41, 0]} scale={2.4} /> */}
         <Peonies position={[-0.9, 0.7, 4.6]} rotation={[0, 5, 0]} scale={5.3} />
+        <Peter position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
+        <Cloudy position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
+        <Coco position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
         <group onPointerDown={(e) => { e.stopPropagation(); onTysonPress?.(); }}>
            <Tyson position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
         </group>
