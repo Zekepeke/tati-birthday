@@ -98,6 +98,24 @@ export function AnimatedScene({
   const environmentProgressRef = useRef(0);
   const scene = useThree((state) => state.scene);
 
+  const { cloudyPos, cloudyRot, cloudyScale } = useControls('Cloudy', {
+    cloudyPos: { value: [-9.5, 0.6, -1.2], min: -20, max: 20, step: 0.01 },
+    cloudyRot: { value: [0, 2.3, 0], min: -Math.PI, max: Math.PI, step: 0.01 },
+    cloudyScale: { value: 8.1, min: 0, max: 20, step: 0.01 },
+  });
+
+  const { peterPos, peterRot, peterScale } = useControls('Peter', {
+    peterPos: { value: [-9.5, 0.6, -1.2], min: -20, max: 20, step: 0.01 },
+    peterRot: { value: [0, 2.3, 0], min: -Math.PI, max: Math.PI, step: 0.01 },
+    peterScale: { value: 8.1, min: 0, max: 20, step: 0.01 },
+  });
+
+  const { cocoPos, cocoRot, cocoScale } = useControls('Coco', {
+    cocoPos: { value: [-9.5, 0.6, -1.2], min: -20, max: 20, step: 0.01 },
+    cocoRot: { value: [0, 2.3, 0], min: -Math.PI, max: Math.PI, step: 0.01 },
+    cocoScale: { value: 8.1, min: 0, max: 20, step: 0.01 },
+  });
+
   useEffect(() => {
     scene.background = new Color("#050505");
     onBackgroundFadeChange?.(backgroundOpacityRef.current);
@@ -231,9 +249,9 @@ export function AnimatedScene({
         ))}
         {/* <HelloKitty position={[-3.2, 2.4, 4.8]} rotation={[0, 2.41, 0]} scale={2.4} /> */}
         <Peonies position={[-0.9, 0.7, 4.6]} rotation={[0, 5, 0]} scale={5.3} />
-        <Peter position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
-        <Cloudy position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
-        <Coco position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
+        <Peter position={peterPos} rotation={peterRot} scale={peterScale} />
+        <Cloudy position={cloudyPos} rotation={cloudyRot} scale={cloudyScale} />
+        <Coco position={cocoPos} rotation={cocoRot} scale={cocoScale} />
         <group onPointerDown={(e) => { e.stopPropagation(); onTysonPress?.(); }}>
            <Tyson position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
         </group>
