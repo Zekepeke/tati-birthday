@@ -249,8 +249,8 @@ export function AnimatedScene({
         ))}
         {/* <HelloKitty position={[-3.2, 2.4, 4.8]} rotation={[0, 2.41, 0]} scale={2.4} /> */}
         <Peonies position={[-0.9, 0.7, 4.6]} rotation={[0, 5, 0]} scale={5.3} />
-        <Peter position={peterPos} rotation={peterRot} scale={peterScale} />
-        <Cloudy position={cloudyPos} rotation={cloudyRot} scale={cloudyScale} />
+        <Peter position={[-1.7999999999999983,1.5000000000000009,2.7299999999999973]} rotation={[0,2.4115926535897976,0]} scale={0.24} />
+        <Cloudy position={[-5.769999999999998,0.37999999999999995,-1.7500000000000004]} rotation={[0,0.9199999999999999,0]} scale={0.24} />
         <Coco position={[-0.35000000000000375,1.53,3.189999999999993]} rotation={[0,2.519999999999996,0]} scale={0.2} />
         <group onPointerDown={(e) => { e.stopPropagation(); onTysonPress?.(); }}>
            <Tyson position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
