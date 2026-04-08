@@ -242,11 +242,11 @@ export function AnimatedScene({
       </group>
 
       <group ref={cakeGroup}>
-        <HeartCake position={[-0.3, 0.1, 0]} rotation={[0, 1.6, 0]} scale={1.4} />
+        <HeartCake position={[-0.3, 0.7, 0]} rotation={[0, 1.6, 0]} scale={1.4} />
       </group>
 
       <group ref={candleGroup} onPointerDown={(e) => { e.stopPropagation(); onCandlePress?.(); }}>
-        <Candle isLit={candleLit} scale={0.25} position={[-0.5, 0.97, 0.04]} />
+        <Candle isLit={candleLit} scale={0.25} position={[-0.5, 1.1, 0]} />
       </group>
     </>
   );
