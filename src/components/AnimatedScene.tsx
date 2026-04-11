@@ -1,8 +1,9 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
+import { useControls, folder } from "leva";
 import type { Group } from "three";
-import { Color, Vector3 } from "three";
+import { Color, Light, Vector3 } from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 // Constants & Utils
@@ -23,6 +24,8 @@ import Peter from "../models/Peter";
 import Coco from "../models/Coco";
 import Cloudy from "../models/Cloudy";
 import Flying_RQ from "../models/Flying_RQ";
+import Yellow from "../models/Yellow";
+import Lights from "../models/Lights";
 
 type AnimatedSceneProps = {
   isPlaying: boolean;
@@ -87,6 +90,14 @@ export function AnimatedScene({
   fireworksActive,
   onTysonPress,
 }: AnimatedSceneProps) {
+  const { yellowPos, yellowRot, yellowScale } = useControls({
+    Yellow: folder({
+      yellowPos: { value: [1.3, 0.2, 1.7] as [number, number, number], step: 0.1, label: "position" },
+      yellowRot: { value: [0, 2.9, 0] as [number, number, number], step: 0.1, label: "rotation" },
+      yellowScale: { value: 0.25, min: 0.01, max: 20, step: 0.01, label: "scale" },
+    }),
+  });
+
   const cakeGroup = useRef<Group>(null);
   const tableGroup = useRef<Group>(null);
   const candleGroup = useRef<Group>(null);
@@ -98,15 +109,22 @@ export function AnimatedScene({
   const environmentProgressRef = useRef(0);
   const scene = useThree((state) => state.scene);
 
+  // Background color refs for smooth lerp between dark and warm party mode
+  const bgColorRef = useRef(new Color("#050505"));
+  const bgTargetRef = useRef(new Color("#050505"));
 
   useEffect(() => {
-    scene.background = new Color("#050505");
+    scene.background = bgColorRef.current;
     onBackgroundFadeChange?.(backgroundOpacityRef.current);
     onEnvironmentProgressChange?.(environmentProgressRef.current);
     return () => {
       scene.background = null;
     };
   }, [scene, onBackgroundFadeChange, onEnvironmentProgressChange]);
+
+  useEffect(() => {
+    bgTargetRef.current.set(fireworksActive ? "#2d1025" : "#050505");
+  }, [fireworksActive]);
 
   const emitBackgroundOpacity = (value: number) => {
     const clamped = clamp(value, 0, 1);
@@ -125,6 +143,9 @@ export function AnimatedScene({
   };
 
   useFrame(({ clock }) => {
+    // Smoothly lerp scene background between dark and warm party colors
+    bgColorRef.current.lerp(bgTargetRef.current, 0.025);
+
     const cake = cakeGroup.current;
     const table = tableGroup.current;
     const candle = candleGroup.current;
@@ -209,7 +230,7 @@ export function AnimatedScene({
   return (
     <>
       <ambientLight intensity={(1 - environmentProgressRef.current) * 0.8} />
-      <directionalLight intensity={1.4} position={[20, 10, 2]} color={[1, 0.9, 0.95]} />
+      <directionalLight intensity={1} position={[20, 10, 2]} color={[1, 0.9, 0.95]} />
       <Fireworks isActive={fireworksActive} origin={[0, 10, 0]} />
       <ConfiguredOrbitControls />
 
@@ -239,6 +260,11 @@ export function AnimatedScene({
         <group onPointerDown={(e) => { e.stopPropagation(); onTysonPress?.(); }}>
            <Tyson position={[-9.5, 0.6, -1.2]} rotation={[0, 2.3, 0]} scale={8.1} />
         </group>
+        <Yellow position={[1.3000000000000003,0.2,1.7000000000000006]} rotation={[0,2.9000000000000012,0]} scale={0.25} />
+        <Lights position={[-11.8, 2.9, 4.8]} rotation={[0, 2.1, 0]} scale={7.88} />
+        <pointLight position={[-11.8, 2.9, 4.8]} color="#ffb347" intensity={8} distance={12} decay={2} />
+        <Lights position={[-9.5, 2.9, -5.9]} rotation={[0, 0.6, 0]} scale={7.88} />
+        <pointLight position={[-9.5, 2.9, -5.9]} color="#ffb347" intensity={8} distance={12} decay={2} />
       </group>
 
       <group ref={cakeGroup}>
