@@ -1,9 +1,8 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useEffect, useRef } from "react";
-import { useControls, folder } from "leva";
 import type { Group } from "three";
-import { Color, Light, Vector3 } from "three";
+import { Color, Vector3 } from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
 // Constants & Utils
