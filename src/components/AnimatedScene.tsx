@@ -90,13 +90,6 @@ export function AnimatedScene({
   fireworksActive,
   onTysonPress,
 }: AnimatedSceneProps) {
-  const { yellowPos, yellowRot, yellowScale } = useControls({
-    Yellow: folder({
-      yellowPos: { value: [1.3, 0.2, 1.7] as [number, number, number], step: 0.1, label: "position" },
-      yellowRot: { value: [0, 2.9, 0] as [number, number, number], step: 0.1, label: "rotation" },
-      yellowScale: { value: 0.25, min: 0.01, max: 20, step: 0.01, label: "scale" },
-    }),
-  });
 
   const cakeGroup = useRef<Group>(null);
   const tableGroup = useRef<Group>(null);
